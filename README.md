@@ -1,12 +1,170 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# 🔗 React Context API Authentication Example
 
-Currently, two official plugins are available:
+A simple **React Context API** project demonstrating how to implement global state management for **user authentication** using `createContext`, `useContext`, and `useState`.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 📌 Features
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Login functionality with user context
+- Access user data across components
+- Clean and responsive UI
+- Toggleable password visibility
+
+---
+
+## 🧠 What is Context API?
+
+The **React Context API** allows you to share state (like user info) globally across the app without passing props manually at every level.
+
+---
+
+## 📈 Architecture Diagram
+
+```mermaid
+graph TD
+  A[App.js] --> B[UserContextProvider]
+  B --> C[Login Component]
+  B --> D[Profile Component]
+  B --> E[Other Components]
+  C --> F[useContext -> setUser()]
+  D --> G[useContext -> get user info]
+```
+
+---
+
+## 📁 Folder Structure
+
+```
+📦ContextAPI-App
+ ┣ 📂src
+ ┃ ┣ 📂components
+ ┃ ┃ ┣ 📜Login.js
+ ┃ ┃ ┗ 📜Profile.js
+ ┃ ┣ 📂context
+ ┃ ┃ ┣ 📜UserContext.js
+ ┃ ┃ ┗ 📜UserContextProvider.js
+ ┃ ┣ 📜App.js
+ ┃ ┗ 📜index.js
+ ┣ 📜package.json
+ ┗ 📜README.md
+```
+
+---
+
+## 🚀 Quick Start
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/yourusername/context-api-auth.git
+cd context-api-auth
+```
+
+### 2. Install Dependencies
+
+```bash
+npm install
+```
+
+### 3. Run the App
+
+```bash
+npm start
+```
+
+---
+
+## ⚙️ Core Code Overview
+
+### `UserContext.js`
+
+```js
+import { createContext } from "react";
+const UserContext = createContext();
+export default UserContext;
+```
+
+### `UserContextProvider.js`
+
+```js
+import React, { useState } from "react";
+import UserContext from "./UserContext";
+
+const UserContextProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+
+  return (
+    <UserContext.Provider value={{ user, setUser }}>
+      {children}
+    </UserContext.Provider>
+  );
+};
+
+export default UserContextProvider;
+```
+
+### `App.js`
+
+```js
+import React from "react";
+import UserContextProvider from "./context/UserContextProvider";
+import Login from "./components/Login";
+import Profile from "./components/Profile";
+
+const App = () => {
+  return (
+    <UserContextProvider>
+      <Login />
+      <Profile />
+    </UserContextProvider>
+  );
+};
+
+export default App;
+```
+
+---
+
+## 👤 Login Component
+
+- Stores username and password.
+- Uses `setUser()` to update the context.
+
+### `Login.js`
+
+```js
+const { setUser } = useContext(UserContext);
+
+const handleSubmit = (e) => {
+  e.preventDefault();
+  setUser({ username, password });
+};
+```
+
+---
+
+## 📄 Profile Component
+
+- Accesses the logged-in user's data using `useContext`.
+
+---
+
+## 📦 Technologies Used
+
+- React
+- Tailwind CSS
+- Context API
+
+---
+
+## 📸 Screenshot
+
+> Feel free to add screenshots of the login & profile UI here!
+
+---
+
+## 📜 License
+
+This project is licensed under the [MIT License](LICENSE).
