@@ -159,9 +159,6 @@ const handleSubmit = (e) => {
 
 ---
 
-## 📸 Screenshot
-
-> Feel free to add screenshots of the login & profile UI here!
 
 ---
 
